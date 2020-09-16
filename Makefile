@@ -10,14 +10,14 @@ clean:
 	rm -rf bin/
 	rm -f main
 	@##if not checking in the generated source, then it should be deleted during the clean task
-	@#rm -f logger/loglevel_string.go
+	@#rm -f log/loglevel_string.go
 	rm -f coverage.txt
 
 
-logger/loglevel_enumer.go: logger/loglevel.go
-	go generate logger/loglevel.go
+log/loglevel_enumer.go: log/loglevel.go
+	go generate log/loglevel.go
 
-generate: dep logger/loglevel_enumer.go
+generate: dep log/loglevel_enumer.go
 	@echo Running generate job...
 
 

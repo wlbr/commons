@@ -1,11 +1,11 @@
 package tools
 
-import "logger"
+import "github.com/wlbr/commons/log"
 
 //CheckErr is a convenience function makes error handling dangerously simple.
 func CheckErr(err error) {
 	if err != nil {
-		logger.Debug("%s", err)
+		log.Debug("%s", err)
 	}
 }
 
