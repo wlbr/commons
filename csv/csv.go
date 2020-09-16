@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/wlbr/commons/log"
+	"logger"
+
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 	"golang.org/x/text/number"
@@ -35,7 +36,7 @@ func FormatCsvReflect(v reflect.Value) (s string) {
 			s = Boolfalse
 		}
 	default:
-		log.Warn("Unknown type: '%T'\n", v)
+		logger.Warn("Unknown type: '%T'\n", v)
 	}
 	return s
 }

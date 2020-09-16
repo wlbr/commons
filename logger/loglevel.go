@@ -1,4 +1,4 @@
-package log
+package logger
 
 //go:generate enumer -type LogLevel loglevel.go
 

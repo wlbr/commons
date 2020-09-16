@@ -7,8 +7,6 @@ import (
 	"runtime"
 	"strings"
 	"time"
-
-	"github.com/wlbr/commons/log"
 )
 
 type CommonConfig struct {
