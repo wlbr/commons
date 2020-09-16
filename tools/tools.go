@@ -1,6 +1,6 @@
 package tools
 
-import "commons/log"
+import "github.com/wlbr/common/log"
 
 //CheckErr is a convenience function makes error handling dangerously simple.
 func CheckErr(err error) {

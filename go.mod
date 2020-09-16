@@ -1,4 +1,4 @@
-module commons
+module github.com/wlbr/common
 
 go 1.15
 

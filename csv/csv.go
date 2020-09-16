@@ -1,10 +1,10 @@
 package csv
 
 import (
-	"commons/log"
 	"fmt"
 	"reflect"
 
+	"github.com/wlbr/common/log"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 	"golang.org/x/text/number"

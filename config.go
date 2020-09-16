@@ -1,13 +1,14 @@
 package commons
 
 import (
-	"commons/log"
 	"flag"
 	"fmt"
 	"os"
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/wlbr/common/log"
 )
 
 type CommonConfig struct {
