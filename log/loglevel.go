@@ -71,6 +71,12 @@ func NewLogger(logfilename string, level LogLevel, useColouredLogging ...bool) *
 		if len(useColouredLogging) == 0 {
 			useColouredOutput = true
 		}
+	} else if logfilename == "" || strings.ToUpper(logfilename) == "STDOUT" {
+		lfilename = "<STDOUT>"
+		logfile = os.Stderr
+		if len(useColouredLogging) == 0 {
+			useColouredOutput = true
+		}
 	} else {
 		lfilename = logfilename
 		logfile, _ = os.OpenFile(lfilename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
@@ -104,8 +110,6 @@ func (l *Logger) writelog(level LogLevel, format string, args ...interface{}) {
 		l.internallogger.SetPrefix(prefix)
 		l.internallogger.Output(3, fmt.Sprintf(format, args...))
 	}
-	fmt.Println("*******************\n3 oleeeeeeeeeeee*\n******************\n")
-
 }
 
 // Info works just as fmt.Printf, but prints into the loggers stream.
@@ -157,8 +161,6 @@ func outputToStandardLogger(level LogLevel, format string, args ...interface{}) 
 	log.Output(3, fmt.Sprintf(format, args...))
 	log.SetPrefix(p)
 	log.SetFlags(f)
-	fmt.Println("*******************\n2 oleeeeeeeeeeee*\n******************\n")
-
 }
 
 // LogInfo works just as fmt.Printf, but prints into the Convenience loggers stream, as set with
