@@ -59,6 +59,7 @@ func (cfg *CommonConfig) FlagDefinition() {
 }
 
 func (cfg *CommonConfig) Initialize(version string, buildtimestamp string) *CommonConfig {
+	fmt.Println("*******************\n1 oleeeeeeeeeeee*\n******************\n")
 	btime, err := time.Parse("2006-01-02_15:04:05_MST", buildtimestamp)
 	if err != nil {
 		btime = time.Now()
@@ -73,7 +74,7 @@ func (cfg *CommonConfig) Initialize(version string, buildtimestamp string) *Comm
 	// Settig up the logger
 	cfg.ActiveLogLevel, err = log.LogLevelString(cfg.logLevel)
 	if err != nil {
-		cfg.ActiveLogLevel = log.All
+		cfg.ActiveLogLevel = log.ALL
 	}
 	cfg.Logger = log.NewLogger(cfg.LogFileName, cfg.ActiveLogLevel, cfg.colouredLogging)
 	cfg.Logger.SetConvenienceLogger()

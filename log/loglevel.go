@@ -18,13 +18,13 @@ type LogLevel int
 
 // The predefined LogLevels that are used by the logging funktions below.
 const (
-	Off LogLevel = iota
-	FatalLevel
-	ErrorLevel
-	WarnLevel
-	DebugLevel
-	InfoLevel
-	All
+	OFF LogLevel = iota
+	FATAL
+	ERROR
+	WARN
+	DEBUG
+	INFO
+	ALL
 )
 
 var loggerflags = log.Ldate | log.Ltime | log.Llongfile | log.Lmicroseconds | log.LUTC
@@ -81,15 +81,15 @@ func NewLogger(logfilename string, level LogLevel, useColouredLogging ...bool) *
 func colorize(level LogLevel, s string) string {
 	var c color.Color
 	switch level {
-	case FatalLevel:
+	case FATAL:
 		c = color.Red
-	case ErrorLevel:
+	case ERROR:
 		c = color.LightRed
-	case WarnLevel:
+	case WARN:
 		c = color.Yellow
-	case DebugLevel:
+	case DEBUG:
 		c = color.LightBlue
-	case InfoLevel:
+	case INFO:
 		c = color.LightCyan
 	}
 	return c.Sprintf("%s", s)
@@ -104,36 +104,38 @@ func (l *Logger) writelog(level LogLevel, format string, args ...interface{}) {
 		l.internallogger.SetPrefix(prefix)
 		l.internallogger.Output(3, fmt.Sprintf(format, args...))
 	}
+	fmt.Println("*******************\n3 oleeeeeeeeeeee*\n******************\n")
+
 }
 
 // Info works just as fmt.Printf, but prints into the loggers stream.
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Info'
 func (l *Logger) Info(format string, args ...interface{}) {
-	l.writelog(InfoLevel, format, args...)
+	l.writelog(INFO, format, args...)
 }
 
 // Debug works just as fmt.Printf, but prints into the loggers stream.
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Debug'
 func (l *Logger) Debug(format string, args ...interface{}) {
-	l.writelog(DebugLevel, format, args...)
+	l.writelog(DEBUG, format, args...)
 }
 
 // Warn works just as fmt.Printf, but prints into the loggers stream.
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Warn'
 func (l *Logger) Warn(format string, args ...interface{}) {
-	l.writelog(WarnLevel, format, args...)
+	l.writelog(WARN, format, args...)
 }
 
 // Error works just as fmt.Printf, but prints into the loggers stream.
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Error'
 func (l *Logger) Error(format string, args ...interface{}) {
-	l.writelog(ErrorLevel, format, args...)
+	l.writelog(ERROR, format, args...)
 }
 
 // Fatal works just as fmt.Printf, but prints into the loggers stream.
 // The message is only printed if ActiveLogLevel is set hogher or equal to 'Fatal'
 func (l *Logger) Fatal(format string, args ...interface{}) {
-	l.writelog(FatalLevel, format, args...)
+	l.writelog(FATAL, format, args...)
 }
 
 // -----------------------------
@@ -155,6 +157,8 @@ func outputToStandardLogger(level LogLevel, format string, args ...interface{}) 
 	log.Output(3, fmt.Sprintf(format, args...))
 	log.SetPrefix(p)
 	log.SetFlags(f)
+	fmt.Println("*******************\n2 oleeeeeeeeeeee*\n******************\n")
+
 }
 
 // LogInfo works just as fmt.Printf, but prints into the Convenience loggers stream, as set with
@@ -162,9 +166,9 @@ func outputToStandardLogger(level LogLevel, format string, args ...interface{}) 
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Info'
 func Info(format string, args ...interface{}) {
 	if convenienceLogger != nil {
-		convenienceLogger.writelog(InfoLevel, format, args...)
+		convenienceLogger.writelog(INFO, format, args...)
 	} else {
-		outputToStandardLogger(InfoLevel, format, args...)
+		outputToStandardLogger(INFO, format, args...)
 	}
 }
 
@@ -173,9 +177,9 @@ func Info(format string, args ...interface{}) {
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Debug'
 func Debug(format string, args ...interface{}) {
 	if convenienceLogger != nil {
-		convenienceLogger.writelog(DebugLevel, format, args...)
+		convenienceLogger.writelog(DEBUG, format, args...)
 	} else {
-		outputToStandardLogger(DebugLevel, format, args...)
+		outputToStandardLogger(DEBUG, format, args...)
 	}
 }
 
@@ -184,9 +188,9 @@ func Debug(format string, args ...interface{}) {
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Warn'
 func Warn(format string, args ...interface{}) {
 	if convenienceLogger != nil {
-		convenienceLogger.writelog(WarnLevel, format, args...)
+		convenienceLogger.writelog(WARN, format, args...)
 	} else {
-		outputToStandardLogger(WarnLevel, format, args...)
+		outputToStandardLogger(WARN, format, args...)
 	}
 }
 
@@ -195,9 +199,9 @@ func Warn(format string, args ...interface{}) {
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Error'
 func Error(format string, args ...interface{}) {
 	if convenienceLogger != nil {
-		convenienceLogger.writelog(ErrorLevel, format, args...)
+		convenienceLogger.writelog(ERROR, format, args...)
 	} else {
-		outputToStandardLogger(ErrorLevel, format, args...)
+		outputToStandardLogger(ERROR, format, args...)
 	}
 }
 
@@ -206,8 +210,8 @@ func Error(format string, args ...interface{}) {
 // The message is only printed if ActiveLogLevel is set hogher or equal to 'Fatal'
 func Fatal(format string, args ...interface{}) {
 	if convenienceLogger != nil {
-		convenienceLogger.writelog(FatalLevel, format, args...)
+		convenienceLogger.writelog(FATAL, format, args...)
 	} else {
-		outputToStandardLogger(FatalLevel, format, args...)
+		outputToStandardLogger(FATAL, format, args...)
 	}
 }
