@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wlbr/common/log"
+	"github.com/wlbr/commons/log"
 )
 
 type CommonConfig struct {
