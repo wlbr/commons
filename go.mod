@@ -1,4 +1,4 @@
-module github.com/wlbr/common
+module github.com/wlbr/commons
 
 go 1.15
 
