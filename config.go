@@ -53,13 +53,12 @@ func (cfg CommonConfig) GetInspectData() string {
 
 func (cfg *CommonConfig) FlagDefinition() {
 	flag.StringVar(&cfg.logLevel, "loglevel", "Warn", "Determines logging verbosity. [All|Info|Debug|Warn|Error|Fatal|Off].")
-	flag.StringVar(&cfg.LogFileName, "logfile", "", "Sets the name of the logfile. Uses STDOUT if empty.")
+	flag.StringVar(&cfg.LogFileName, "logfile", "", "Sets the name of the logfile. Uses STDERR if empty.")
 	flag.BoolVar(&cfg.ShowVersion, "version", false, "Show version info.")
 	flag.BoolVar(&cfg.colouredLogging, "logcolour", true, "Use coloured logging (switch of when redirecting log output).")
 }
 
 func (cfg *CommonConfig) Initialize(version string, buildtimestamp string) *CommonConfig {
-	fmt.Println("*******************\n1 oleeeeeeeeeeee*\n******************\n")
 	btime, err := time.Parse("2006-01-02_15:04:05_MST", buildtimestamp)
 	if err != nil {
 		btime = time.Now()
@@ -72,7 +71,7 @@ func (cfg *CommonConfig) Initialize(version string, buildtimestamp string) *Comm
 		flag.Parse()
 	}
 	// Settig up the logger
-	cfg.ActiveLogLevel, err = log.LogLevelString(cfg.logLevel)
+	cfg.ActiveLogLevel, err = log.LogLevelString(strings.ToUpper(cfg.logLevel))
 	if err != nil {
 		cfg.ActiveLogLevel = log.ALL
 	}
