@@ -22,8 +22,8 @@ const (
 	FATAL
 	ERROR
 	WARN
-	DEBUG
 	INFO
+	DEBUG
 	ALL
 )
 
@@ -71,7 +71,7 @@ func NewLogger(logfilename string, level LogLevel, useColouredLogging ...bool) *
 		if len(useColouredLogging) == 0 {
 			useColouredOutput = true
 		}
-	} else if logfilename == "" || strings.ToUpper(logfilename) == "STDOUT" {
+	} else if strings.ToUpper(logfilename) == "STDOUT" {
 		lfilename = "<STDOUT>"
 		logfile = os.Stderr
 		if len(useColouredLogging) == 0 {

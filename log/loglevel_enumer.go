@@ -7,9 +7,9 @@ import (
 	"fmt"
 )
 
-const _LogLevelName = "OFFFATALERRORWARNDEBUGINFOALL"
+const _LogLevelName = "OFFFATALERRORWARNINFODEBUGALL"
 
-var _LogLevelIndex = [...]uint8{0, 3, 8, 13, 17, 22, 26, 29}
+var _LogLevelIndex = [...]uint8{0, 3, 8, 13, 17, 21, 26, 29}
 
 func (i LogLevel) String() string {
 	if i < 0 || i >= LogLevel(len(_LogLevelIndex)-1) {
@@ -25,8 +25,8 @@ var _LogLevelNameToValueMap = map[string]LogLevel{
 	_LogLevelName[3:8]:   1,
 	_LogLevelName[8:13]:  2,
 	_LogLevelName[13:17]: 3,
-	_LogLevelName[17:22]: 4,
-	_LogLevelName[22:26]: 5,
+	_LogLevelName[17:21]: 4,
+	_LogLevelName[21:26]: 5,
 	_LogLevelName[26:29]: 6,
 }
 
