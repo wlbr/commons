@@ -14,6 +14,8 @@ import (
 
 // LogLevel sets the criticality of a logging output. It is used to filter logging messages
 // depending on their priority. Compare to log4j.
+// Level DEBUG should be used for temporary debugging information and should be removed
+// from production code.
 type LogLevel int
 
 // The predefined LogLevels that are used by the logging funktions below.
@@ -102,7 +104,7 @@ func colorize(level LogLevel, s string) string {
 }
 
 func (l *Logger) writelog(level LogLevel, format string, args ...interface{}) {
-	if l.ActiveLoglevel >= level {
+	if level == DEBUG || l.ActiveLoglevel >= level {
 		prefix := fmt.Sprintf("%5s: ", strings.TrimSuffix(strings.ToUpper(level.String()), "LEVEL"))
 		if l.UseColouredOutput {
 			prefix = colorize(level, prefix)
@@ -116,12 +118,6 @@ func (l *Logger) writelog(level LogLevel, format string, args ...interface{}) {
 // The message is only printed if ActiveLogLevel is set higher or equal to 'Info'
 func (l *Logger) Info(format string, args ...interface{}) {
 	l.writelog(INFO, format, args...)
-}
-
-// Debug works just as fmt.Printf, but prints into the loggers stream.
-// The message is only printed if ActiveLogLevel is set higher or equal to 'Debug'
-func (l *Logger) Debug(format string, args ...interface{}) {
-	l.writelog(DEBUG, format, args...)
 }
 
 // Warn works just as fmt.Printf, but prints into the loggers stream.
@@ -140,6 +136,12 @@ func (l *Logger) Error(format string, args ...interface{}) {
 // The message is only printed if ActiveLogLevel is set hogher or equal to 'Fatal'
 func (l *Logger) Fatal(format string, args ...interface{}) {
 	l.writelog(FATAL, format, args...)
+}
+
+// Debug works just as fmt.Printf, but prints into the loggers stream.
+// The message is printed anyway, regardless of the log level.
+func (l *Logger) Debug(format string, args ...interface{}) {
+	l.writelog(DEBUG, format, args...)
 }
 
 // -----------------------------
