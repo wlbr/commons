@@ -105,7 +105,7 @@ func colorize(level LogLevel, s string) string {
 }
 
 func (l *Logger) writelog(level LogLevel, format string, args ...interface{}) {
-	if level == DEBUG || l.ActiveLoglevel >= level {
+	if level == DEBUG || level == PRINT || l.ActiveLoglevel >= level {
 		prefix := fmt.Sprintf("%5s: ", strings.TrimSuffix(strings.ToUpper(level.String()), "LEVEL"))
 		if l.UseColouredOutput {
 			prefix = colorize(level, prefix)
@@ -193,12 +193,31 @@ func Info(format string, args ...interface{}) {
 
 // LogDebug works just as fmt.Printf, but prints into the Convenience loggers stream, as set with
 // SetConvenienceLogger(). It uses the standard logger (package log) if te Convenience logger is unset.
-// The message is only printed if ActiveLogLevel is set higher or equal to 'Debug'
+// The message is printed anyway, regardless of the log level.
+// Debug and Print are somehow the same and differ just in their semantics.
+// You might use Debug when hunting a bug for temporary printouts.
+// Print on the other side is for writing something to the log at any
+// circumstances, like a version info (if intended.)
 func Debug(format string, args ...interface{}) {
 	if convenienceLogger != nil {
 		convenienceLogger.writelog(DEBUG, format, args...)
 	} else {
 		outputToStandardLogger(DEBUG, format, args...)
+	}
+}
+
+// Print works just as fmt.Printf, but prints into the loggers stream, as set with
+// SetConvenienceLogger(). It uses the standard logger (package log) if te Convenience logger is unset.
+// The message is printed anyway, regardless of the log level.
+// Debug and Print are somehow the same and differ just in their semantics.
+// You might use Debug when hunting a bug for temporary printouts.
+// Print on the other side is for writing something to the log at any
+// circumstances, like a version info (if intended.)
+func Print(format string, args ...interface{}) {
+	if convenienceLogger != nil {
+		convenienceLogger.writelog(PRINT, format, args...)
+	} else {
+		outputToStandardLogger(PRINT, format, args...)
 	}
 }
 
