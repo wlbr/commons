@@ -77,7 +77,7 @@ func (cfg *CommonConfig) Initialize(version string, buildtimestamp string) *Comm
 	}
 	cfg.Logger = log.NewLogger(cfg.LogFileName, cfg.ActiveLogLevel, cfg.colouredLogging)
 	cfg.Logger.SetConvenienceLogger()
-	log.Debug("Current working directory is '%s'.", cfg.WorkingDirectory)
+
 	if err != nil {
 		log.Warn("Error in config, Loglevel '%s' not existing in tools/loglevel.go. Setting LogLevel to 'All'", cfg.logLevel)
 	}
