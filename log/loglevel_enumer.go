@@ -6,9 +6,9 @@ import (
 	"fmt"
 )
 
-const _LogLevelName = "OFFFATALERRORWARNINFODEBUGALL"
+const _LogLevelName = "OFFFATALERRORWARNINFODEBUGPRINTALL"
 
-var _LogLevelIndex = [...]uint8{0, 3, 8, 13, 17, 21, 26, 29}
+var _LogLevelIndex = [...]uint8{0, 3, 8, 13, 17, 21, 26, 31, 34}
 
 func (i LogLevel) String() string {
 	if i < 0 || i >= LogLevel(len(_LogLevelIndex)-1) {
@@ -17,7 +17,7 @@ func (i LogLevel) String() string {
 	return _LogLevelName[_LogLevelIndex[i]:_LogLevelIndex[i+1]]
 }
 
-var _LogLevelValues = []LogLevel{0, 1, 2, 3, 4, 5, 6}
+var _LogLevelValues = []LogLevel{0, 1, 2, 3, 4, 5, 6, 7}
 
 var _LogLevelNameToValueMap = map[string]LogLevel{
 	_LogLevelName[0:3]:   0,
@@ -26,7 +26,8 @@ var _LogLevelNameToValueMap = map[string]LogLevel{
 	_LogLevelName[13:17]: 3,
 	_LogLevelName[17:21]: 4,
 	_LogLevelName[21:26]: 5,
-	_LogLevelName[26:29]: 6,
+	_LogLevelName[26:31]: 6,
+	_LogLevelName[31:34]: 7,
 }
 
 // LogLevelString retrieves an enum value from the enum constants string name.

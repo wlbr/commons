@@ -26,6 +26,7 @@ const (
 	WARN
 	INFO
 	DEBUG
+	PRINT
 	ALL
 )
 
@@ -140,8 +141,22 @@ func (l *Logger) Fatal(format string, args ...interface{}) {
 
 // Debug works just as fmt.Printf, but prints into the loggers stream.
 // The message is printed anyway, regardless of the log level.
+// Debug and Print are somehow the same and differ just in their semantics.
+// You might use Debug when hunting a bug for temporary printouts.
+// Print on the other side is for writing something to the log at any
+// circumstances, like a version info (if intended.
 func (l *Logger) Debug(format string, args ...interface{}) {
 	l.writelog(DEBUG, format, args...)
+}
+
+// Print works just as fmt.Printf, but prints into the loggers stream.
+// The message is printed anyway, regardless of the log level.
+// Debug and Print are somehow the same and differ just in their semantics.
+// You might use Debug when hunting a bug for temporary printouts.
+// Print on the other side is for writing something to the log at any
+// circumstances, like a version info (if intended.)
+func (l *Logger) Print(format string, args ...interface{}) {
+	l.writelog(PRINT, format, args...)
 }
 
 // -----------------------------

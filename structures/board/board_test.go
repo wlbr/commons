@@ -2,26 +2,15 @@ package board
 
 import (
 	"fmt"
-	"log"
 	"testing"
-
-	"github.com/wlbr/commons/strategies/astar"
 )
 
-func (b BoardOfSquares[T]) printNeighbors(x, y int) {
-	n, _ := b.GetNeighborCoordinates(x, y)
-	fmt.Printf("[%d,%d] - %v\n", x, y, n)
-}
-
-func (b BoardOfSquares[T]) checkErr(x, y int, v T) bool {
+func (b BoardOfSquares[T]) checkErrValues(x, y int, v T) bool {
 	r, e := b.Get(x, y)
-	if e != nil {
-		return false
-	}
-	return r == v
+	return (e != nil) || (r != v)
 }
 
-func TestBoard(t *testing.T) {
+func TestBoardValues(t *testing.T) {
 
 	b := NewBoardOFSquares[string](10, 3, "-")
 
@@ -29,40 +18,53 @@ func TestBoard(t *testing.T) {
 	b.Set(2, 1, "3-2")
 	b.Set(4, 2, "5-3")
 
-	if b.checkErr(2, 0, "3-1") {
+	if b.checkErrValues(2, 0, "3-1") {
 		t.Fail()
 	}
-	if b.checkErr(2, 1, "3-2") {
+	if b.checkErrValues(2, 1, "3-2") {
 		t.Fail()
 	}
-	if b.checkErr(2, 0, "3-2") {
+	if b.checkErrValues(2, 2, "-") {
 		t.Fail()
 	}
-	if b.checkErr(4, 2, "5-3") {
+	if b.checkErrValues(4, 2, "5-3") {
 		t.Fail()
 	}
+}
 
-	fmt.Println(b)
+func (b BoardOfSquares[T]) printNeighbors(x, y int) {
+	n, _ := b.GetNeighborCoordinates(x, y)
+	fmt.Printf("[%d,%d] - %v\n", x, y, n)
+}
 
-	b.printNeighbors(1, 1)
-	b.printNeighbors(0, 1)
-	b.printNeighbors(0, 2)
-
-	b.printNeighbors(8, 1)
-	b.printNeighbors(9, 1)
-	b.printNeighbors(9, 2)
-
-	from, _ := b.GetElement(0, 0)
-	to, _ := b.GetElement(b.xdim-1, b.ydim-1)
-	p, distance, found := astar.Path(from, to)
-
-	if !found {
-		log.Println("Could not find path")
+func (b BoardOfSquares[T]) checkErrNeighbors(x, y int, expected int) bool {
+	r, e := b.GetNeighborCoordinates(x, y)
+	if e != nil {
+		return false
 	}
-	for _, v := range p {
-		e := v.(*element[string])
-		fmt.Println(e.pos)
-	}
-	fmt.Println(distance)
+	return len(r) == expected
+}
+
+func TestBoardNeighbors(t *testing.T) {
+
+	b := NewBoardOFSquares[string](10, 3, "-")
+
+	b.Set(2, 0, "3-1")
+	b.Set(2, 1, "3-2")
+	b.Set(4, 2, "5-3")
+
+	//center
+	b.checkErrNeighbors(1, 1, 8)
+	//borders
+	b.checkErrNeighbors(1, 0, 5)
+	b.checkErrNeighbors(9, 1, 5)
+	b.checkErrNeighbors(1, 2, 5)
+	b.checkErrNeighbors(0, 1, 5)
+
+	//corners
+	b.checkErrNeighbors(0, 0, 3)
+	b.checkErrNeighbors(9, 0, 3)
+	b.checkErrNeighbors(9, 2, 3)
+	b.checkErrNeighbors(0, 2, 3)
 
 }

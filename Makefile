@@ -39,10 +39,10 @@ coverage: test
 
 
 
-$(GOPATH)/src/github.com/alvaroloes/enumer:
-	go get -u github.com/alvaroloes/enumer
+$(GOPATH)/src/github.com/mstoykov/enumer:
+	go get -u github.com/mstoykov/enumer
 
 
-dep: $(GOPATH)/src/github.com/alvaroloes/enumer
+dep: $(GOPATH)/src/github.com/mstoykov/enumer
 	@echo Running dep job...
 

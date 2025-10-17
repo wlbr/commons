@@ -123,7 +123,7 @@ func (t *Torus) GetBool(x, y int) bool {
 }
 
 func (t *Torus) GetString(x, y int) string {
-	return fmt.Sprintf(t.elementFormatter(t.Get(x, y)))
+	return fmt.Sprint(t.elementFormatter(t.Get(x, y)))
 }
 
 func (t *Torus) GetRune(x, y int) rune {
